@@ -1,5 +1,7 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,12 @@ import java.util.Set;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final Set<User> usersList = new HashSet<>();
 
     @GetMapping
     public Set<User> findAll() {
+        log.info("Get all users");
         return usersList;
     }
 
