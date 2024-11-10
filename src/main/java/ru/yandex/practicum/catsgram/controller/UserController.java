@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping
     public Set<User> findAll() {
-        log.info("Get all users");
+        log.debug("Get all users: {}", usersList);
         return usersList;
     }
 
