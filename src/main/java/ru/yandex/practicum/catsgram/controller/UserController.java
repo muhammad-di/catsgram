@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping
     public Set<User> findAll() {
-        log.debug("Get all users: {}", usersList);
+        log.debug("Get all users: {}", usersList.size());
         return usersList;
     }
 
@@ -33,6 +33,7 @@ public class UserController {
         validateEmail(user);
         usersList.add(user);
 
+        log.debug("This users was saved: {}", user);
         return user;
     }
 
