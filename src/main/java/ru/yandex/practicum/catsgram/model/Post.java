@@ -1,12 +1,16 @@
 package ru.yandex.practicum.catsgram.model;
 
+import lombok.Setter;
+
 import java.time.Instant;
 
 public class Post {
 
     private final String author; // автор
     private final Instant creationDate = Instant.now(); // дата создания
+    @Setter
     private String description; // описание
+    @Setter
     private String photoUrl; // url-адрес фотографии
 
     public Post(String author, String description, String photoUrl) {
@@ -27,15 +31,8 @@ public class Post {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getPhotoUrl() {
         return photoUrl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
 }
