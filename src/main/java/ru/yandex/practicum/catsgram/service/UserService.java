@@ -24,12 +24,12 @@ public class UserService {
         return usersList;
     }
 
-    public User findUserByEmail(String email) {
+    public void findUserByEmail(String email) {
         Optional<User> optionalUser = usersList.stream()
                 .filter(u -> u.getEmail().equals(email))
                 .findFirst();
 
-        return optionalUser
+         optionalUser
                 .orElseThrow(() -> new UserNotFoundException(String.format("Пользователь %s не найден", email)));
     }
 
