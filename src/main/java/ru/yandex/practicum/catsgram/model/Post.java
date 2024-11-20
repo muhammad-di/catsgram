@@ -6,6 +6,9 @@ import java.time.Instant;
 
 @Data
 public class Post {
+    private static int nextId = 0;
+
+    private Integer id;
     private final String author; // автор
     private final Instant creationDate; // дата создания
     private String description; // описание
@@ -16,5 +19,9 @@ public class Post {
         this.creationDate = Instant.now();
         this.description = description;
         this.photoUrl = photoUrl;
+    }
+
+    public static int generateId() {
+        return ++nextId;
     }
 }
