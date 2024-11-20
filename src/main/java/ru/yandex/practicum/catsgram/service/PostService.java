@@ -5,11 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.PostNotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
+import ru.yandex.practicum.catsgram.model.PostOrders;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,9 +26,25 @@ public class PostService {
                 .orElseThrow(() -> new PostNotFoundException(String.format("Пост с id %s не найден", postId)));
     }
 
-    public Collection<Post> findAll() {
+    public Collection<Post> findAll(PostOrders sort, int page, int size) {
         log.debug("Получаем все посты в количестве (service): {}", posts.size());
-        return posts.values();
+        int from = page * size;
+
+        int numberOfPages = posts.size() / size;
+        Collection<Post> potsList = posts.values();
+        return potsList.stream()
+                .sorted(
+                        (p1, p2) -> {
+                            int comp = p1.getCreationDate().compareTo(p2.getCreationDate());
+                            if (sort.equals(PostOrders.DESC)) {
+                                return -1 * comp;
+                            }
+                            return comp;
+                        }
+                )
+                .skip(from)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     public Post create(Post post) {
