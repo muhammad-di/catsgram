@@ -1,5 +1,7 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +16,6 @@ import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.model.PostOrders;
 import ru.yandex.practicum.catsgram.service.PostService;
 
-import javax.validation.constraints.Min;
 import java.util.Collection;
 
 @Slf4j
@@ -31,9 +32,9 @@ public class PostController {
     }
 
     @GetMapping
-    public Collection<Post> findAll(@RequestParam(defaultValue = "desc") PostOrders sort,
-                                    @RequestParam(defaultValue = "0") @Min(0) Integer page,
-                                    @RequestParam(defaultValue = "10") @Min(1) Integer size) {
+    public Collection<Post> findAll(@Valid @RequestParam(defaultValue = "desc") PostOrders sort,
+                                    @Valid @RequestParam(defaultValue = "0") @Min(0) Integer page,
+                                    @Valid @RequestParam(defaultValue = "10") @Min(1) Integer size) {
         log.debug("Получаем все посты в количестве (controller)");
         return postService.findAll(sort, page, size);
     }
